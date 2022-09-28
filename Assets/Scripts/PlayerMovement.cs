@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5;
+    private Rigidbody2D rb;
+    public float speed = 5.5f;
     private float horizontal;
-    private Transform playerTransform;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        playerTransform = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+    
+    private void FixedUpdate() 
+    {
+        //la velocidad del Rigidbody es un vector que en el eje X, mueves en horizontal dependiendo de la velocidad(multiplica)
+        rb.velocity = new Vector2 (horizontal * speed, 0f);
     }
 
     // Update is called once per frame
@@ -20,6 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
         //playerTransform.position += new Vector3 (horizontal * speed * Time.deltaTime, 0 , 0);
         //playerTransform.position += new Vector3 (1, 0 , 0) * horizontal * speed * Time.deltaTime;
-        //playerTransform.Translate(Vector3.right * horizontal * speed * Time.deltaTime, Space.Self);
+        //playerTransform.Translate(Vector3.right * horizontal * speed * Time.deltaTime, Space.World);
     }
 }

@@ -9,17 +9,19 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public float speed = 2f;
+    public float jumpforce = 7f; 
     private float horizontal;
     public PlayableDirector director;
-    public float buttonTime = 0.3f;
-    float jumpTime;
-    bool jumping;
+    private Transform playerTransform; 
+
+
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        playerTransform = GetComponent<Transform>();
 
         if(GroundChecker.isGrounded)
         {
@@ -43,31 +45,31 @@ public class PlayerMovement : MonoBehaviour
         //playerTransform.Translate(Vector3.right * horizontal * speed * Time.deltaTime, Space.World);
         if(horizontal == 0)
         {
-            anim.SetBool("Run", false);
+            anim.SetBool("Run" , false);
+        }  
+        else if (horizontal == 1)
+        {
+            anim.SetBool("Run" , true); 
+            playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (horizontal == -1)
+        {
+            anim.SetBool("Run" , true); 
+            playerTransform.rotation = Quaternion.Euler(0, -180, 0);
         }
 
-        else
-        {
-            anim.SetBool("Run", true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            jumping = true;
-            jumpTime = 0;
-        }
-
-        if(jumping)
-        {
-            jumpTime += Time.deltaTime;
-        }
-
-        if(Input.GetKeyUp(KeyCode.Space) | jumpTime > buttonTime)
-        {
-            jumping = false;
-        }
+        horizontal = Input.GetAxisRaw("Horizontal");
+        jump();
     }
     
+    void jump()
+    {
+        if(Input.GetButtonDown("Jump"))
+        {
+            rb.AddForce(playerTransform.up * jumpforce);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject.tag == "Cinematica")

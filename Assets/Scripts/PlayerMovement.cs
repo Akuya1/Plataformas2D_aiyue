@@ -33,11 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //la velocidad del Rigidbody es un vector que en el eje X, mueves en horizontal dependiendo de la velocidad(multiplica)
         rb.velocity = new Vector2 (horizontal * speed, 0);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         horizontal = Input.GetAxisRaw("Horizontal");
 
         //playerTransform.position += new Vector3 (horizontal * speed * Time.deltaTime, 0 , 0);
@@ -57,6 +53,11 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("Run" , true); 
             playerTransform.rotation = Quaternion.Euler(0, -180, 0);
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         horizontal = Input.GetAxisRaw("Horizontal");
         jump();

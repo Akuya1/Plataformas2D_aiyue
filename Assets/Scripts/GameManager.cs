@@ -29,6 +29,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     public void RestarVidas()
     {
-        vidas--;
+        
     }
 }

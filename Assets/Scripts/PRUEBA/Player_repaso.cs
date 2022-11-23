@@ -55,6 +55,18 @@ public class Player_repaso : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other) 
+    {
+        if(other.gameObject.tag == "Star")
+        {
+            GameManager_repaso.Instance.LoadLevel(1);
+        }
+        else if(other.gameObject.tag == "Coin")
+        {
+            GameManager_repaso.Instance.AddCoin(other.gameObject);
+        }
+    }
+
     //FixedUptade se repite x veces por FPS del juego, por defecto 50 aprox.
     void FixedUpdate() 
     {

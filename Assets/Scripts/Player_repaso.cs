@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player_repaso : MonoBehaviour
 {
     private Rigidbody2D rBody;
+    private Animator anim;
     private float horizontal;
     //flechas de movimiento (horizontal)
 
@@ -20,6 +21,7 @@ public class Player_repaso : MonoBehaviour
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update se repite todo el tiempo por FPS del juego
@@ -31,10 +33,16 @@ public class Player_repaso : MonoBehaviour
         if(horizontal < 0)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
+            anim.SetBool("isRunning", true);
         }
         else if(horizontal > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            anim.SetBool("isRunning", true);
+        }
+        else if(horizontal == 0)
+        {
+            anim.SetBool("isRunning", false);
         }
 
         //en la posicion del game object, se crea un rayo el cual toca una layer, si es la que debe, la funcion actuara.
@@ -43,6 +51,7 @@ public class Player_repaso : MonoBehaviour
         if(isGrounded && Input.GetButtonDown("Jump"))
         {
             rBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            anim.SetBool("isJumping", true);
         }
     }
 
@@ -50,6 +59,15 @@ public class Player_repaso : MonoBehaviour
     void FixedUpdate() 
     {
         rBody.velocity = new Vector2(horizontal * speed, rBody.velocity.y);
+    }
+
+    void OnCollisionEnter2D(Collision2D coll) 
+    {
+        //3 pq es la layer de ground en el inspector
+        if(coll.gameObject.layer == 3)
+        {
+            anim.SetBool("isJumping", false);
+        }
     }
 
     void OnDrawGizmos()

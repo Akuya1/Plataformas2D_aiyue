@@ -55,15 +55,15 @@ public class Player_repaso : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject.tag == "Star")
         {
-            GameManager_repaso.Instance.LoadLevel(1);
+            GameManagerRepaso.Instance.LoadLevel(1);
         }
-        else if(other.gameObject.tag == "Coin")
+        else if(other.gameObject.layer == 8)
         {
-            GameManager_repaso.Instance.AddCoin(other.gameObject);
+            GameManagerRepaso.Instance.AddCoin(other.gameObject);
         }
     }
 

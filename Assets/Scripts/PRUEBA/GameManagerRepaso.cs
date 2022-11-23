@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager_repaso : MonoBehaviour
+public class GameManagerRepaso : MonoBehaviour
 {
     int coins = 0;
 
     [SerializeField]Text coinsText;
     
-    public static GameManager_repaso Instance;
+    public static GameManagerRepaso Instance;
     // Start is called before the first frame update
     void awake()
     {
